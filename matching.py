@@ -1,6 +1,6 @@
 import json
 import datetime
-
+import random
 
 def open_file():
     with open("users_data_fornat.json", "r") as file:
@@ -16,17 +16,30 @@ def custom_date(user):
 
 sort_data = sorted(data["users"], key=custom_date)
 
+last_print_answer = {}
+
 def matching_user(locate):
     user_locate = {}
     
-    for data in sort_data:
-        if(data["status"] == False):
-           locates =data["locate"]["location"]
-           if(locate == locates):
-                user_locate.setdefault(locates, []).append(data["name"])
+    # Get the last printed answer for this location, or initialize it to None
+    last_answer = last_print_answer.get(locate, None)
+    
+    for user in sort_data:
+        if not user["status"]:
+            for content in user["content"]:
+                if content["location"] == locate and user["name"] != last_answer:
+                    user_locate.setdefault(locate, []).append(user["name"])
     
     if locate in user_locate:
-        for name in user_locate[locate]:
-            print(name)
+        if user_locate[locate]:
+            # Select a random answer from the available answers
+            next_answer = random.choice(user_locate[locate])
+            print(next_answer)
+            last_print_answer[locate] = next_answer
+        else:
+            print("No data")
 
+# Example usage:
 matching_user("Canada")
+matching_user("Thailand")
+matching_user("Korea")
