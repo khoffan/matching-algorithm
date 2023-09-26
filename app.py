@@ -14,7 +14,7 @@ current_date = datetime.datetime.now()
 while count < 11:
     username = random.choice(unique_usernames)
     unique_usernames.remove(username)
-    
+    location = random.choice(["รับงานทั้งหมด","หอพัก-โลตัส", "หอพัก-โรงช้าง"])
     status = random.choice([True,False])
     time_difference_minutes = random.randint(10, 30)
     day_diff = random.randint(0,3)
@@ -29,21 +29,21 @@ while count < 11:
         "id": ids,
         "name": username,
         "status": status,
-        "content":[],
+        "location": location,
+        "Posted":[],
         "date": current_dates,
     })
     for i in range(3):
         content = random.choice(["Hello", "Welcome", "Hi", "how are you"])
-        location = random.choice(["USA", "Maxcio", "Canada", "England", "Thailand", "Agentina", "Korea", "japan"])
-        user_data["users"][-1]["content"].append({
-            "id": number,
+        
+        user_data["users"][-1]["Posted"].append({
+            "id": i+1,
             "content": content,
-            "location": location,
         })
-        number += 1
+        
 
 # print(user_data)
-with open("users_data_fornat.json", "w") as file_json:
-    json.dump(user_data, file_json, indent=2)
+with open("users_data_fornat.json", "w", encoding="utf-8") as file_json:
+    json.dump(user_data, file_json, ensure_ascii=False, indent=2)
 
 print("user save data success")
