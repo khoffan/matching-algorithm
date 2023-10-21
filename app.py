@@ -30,20 +30,12 @@ while count < 11:
         "name": username,
         "status": status,
         "location": location,
-        "Posted":[],
         "date": current_dates,
     })
-    for i in range(3):
-        content = random.choice(["Hello", "Welcome", "Hi", "how are you"])
-        
-        user_data["users"][-1]["Posted"].append({
-            "id": i+1,
-            "content": content,
-        })
         
 
 # print(user_data)
 with open("users_data_fornat.json", "w", encoding="utf-8") as file_json:
     json.dump(user_data, file_json, ensure_ascii=False, indent=2)
+    print("user save data success")
 
-print("user save data success")
