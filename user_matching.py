@@ -18,7 +18,13 @@ sort_data = sorted(data["users"], key=custom_date)
 
 last_print_answer = {}
 
+customer_user = []
 
+def customer_users():
+    for user in sort_data:
+        if user['status'] == False:
+            customer_user.append({user['id'], user['name']})
+    return customer_user
 def matching_user(Locate):
     last_print_answer = []
     for user in data['users']:
@@ -45,8 +51,9 @@ def matching_user(Locate):
             print("ไม่มีข้อความนี้อยู่")
         
 # Example usage:
-matching_user("รับงานทั้งหมด")
-matching_user("หอพัก-โลตัส")
-matching_user("หอพัก-โรงช้าง")
+print(customer_users())
+# matching_user("รับงานทั้งหมด")
+# matching_user("หอพัก-โลตัส")
+# matching_user("หอพัก-โรงช้าง")
 
 
