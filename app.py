@@ -1,41 +1,23 @@
-import random
+from flask import Flask, jsonify, request
+from user_matching import matching
 import json
-import uuid
-import datetime
-import time
 
 
-unique_usernames = ["John", "May", "King", "Max", "Jason", "Vincton", "Janasis", "Oasis", "Markuz", "Jenifer"]
+app = Flask(__name__)
 
-user_data = {"users":[]}
-count = 1
-number = 1
-current_date = datetime.datetime.now()
-while count < 11:
-    username = random.choice(unique_usernames)
-    unique_usernames.remove(username)
-    location = random.choice(["รับงานทั้งหมด","หอพัก-โลตัส", "หอพัก-โรงช้าง"])
-    status = random.choice([True,False])
-    time_difference_minutes = random.randint(10, 30)
-    day_diff = random.randint(0,3)
-    # timeDate = datetime.datetime.now()
-    current_date -= datetime.timedelta(days=day_diff, minutes=time_difference_minutes)
-    current_dates = current_date.strftime("%Y-%m-%d %H:%M:%S")
-    # print(current_date)
+@app.route("/api/matching", methods=['POST'])
+def hello_world():
+    data = request.get_json()
 
-    ids = str(uuid.uuid4())
-    count += 1
-    user_data["users"].append({
-        "id": ids,
-        "name": username,
-        "status": status,
-        "location": location,
-        "date": current_dates,
-    })
-        
+    if 'customers' not in data or 'riders' not in data:
+            return jsonify({'error': 'Invalid request. "customers" and "riders" are required.'}), 400
 
-# print(user_data)
-with open("users_data_fornat.json", "w", encoding="utf-8") as file_json:
-    json.dump(user_data, file_json, ensure_ascii=False, indent=2)
-    print("user save data success")
+    customers = data['customers']
+    riders = data['riders']
 
+    matched = matching(customers,riders)
+    return jsonify({'matches': matched})
+
+
+if __name__ in '__main__':
+    app.run(debug=True)
