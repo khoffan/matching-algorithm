@@ -1,5 +1,8 @@
 import os
 from dotenv import load_dotenv
+import json
+from google.protobuf.timestamp_pb2 import Timestamp
+from datetime import datetime, timezone
 import firebase_admin
 from firebase_admin import credentials, firestore
 
@@ -14,17 +17,43 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # Reference to your collection
-collection_ref = db.collection("userProfile")
+collection_ref = db.collection("deliverPost")
 
 # Get all documents in the collection
 docs = collection_ref.stream()
 
-# Iterate over documents and print data
-for doc in docs:
-    data  = doc.to_dict()
+def timeformate(datenano):
 
+    # Convert the string to a datetime object
+    dt = datetime.strftime(datenano, "%Y-%m-%d %H:%M:%S")
+
+    return dt
+
+# Iterate over documents and print data
+all_users = {"users": []}
+count = 0
+for doc in docs:
+    count += 1
+    data  = doc.to_dict()
+    # print(data)
     documentId = doc.id
-    name = data.get('name')
-    lname = data.get('lname')
-    stdid = data.get('stdid')
-    print(f"name: {name} \t lname: {lname} \t stdid: {stdid}")
+    name = data["name"]
+    locate = data["locattion"]
+    status = data["status"]
+    datenano = data["date"]
+    date = timeformate(datenano)
+    if name != "":
+        all_users["users"].append({
+            "id": documentId,
+            "name": name,
+            "location": locate,
+            "role": status,
+            "date": date,
+        })
+# print(all_users)
+try:
+    with open("../all_user_in_db.json", "w", encoding="utf-8") as file_json:
+        json.dump(all_users, file_json, ensure_ascii=False, indent=2)
+        print("save data success")
+except Exception as e:
+    print(f"e = {e}")
