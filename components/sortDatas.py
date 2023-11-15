@@ -3,7 +3,7 @@ import datetime
 
 class SortDatas:
     def __init__(self):
-        with open("users_data_fornat.json", "r", encoding="utf-8") as file:
+        with open("user_in_db.json", "r", encoding="utf-8") as file:
             datas = json.load(file)
 
         self.data = datas
