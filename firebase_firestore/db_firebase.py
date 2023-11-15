@@ -39,12 +39,11 @@ count = 0
 for doc in docs:
     count += 1
     data  = doc.to_dict()
-    # print(data)
     documentId = doc.id
     if data["name"] != "":
         name = data["name"]
         locate = data["locattion"]
-        status = data["satus"]
+        status = data["status"]
         datenano = data["date"]
         date = timeformate(datenano)
         all_users["users"].append({
@@ -56,7 +55,7 @@ for doc in docs:
         })
 # print(all_users)
 try:
-    with open("../user_in_db.json", "w", encoding="utf-8") as file_json:
+    with open("../all_user_in_db.json", "w", encoding="utf-8") as file_json:
         json.dump(all_users, file_json, ensure_ascii=False, indent=2)
         print("save data success")
 except Exception as e:
