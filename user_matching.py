@@ -14,15 +14,15 @@ def matching(customer):
     customers_ids = set()
     for c in customer:
         for r in riders:
-            if r['id'] not in rider_ids and c['id'] not in customers_ids and c['location'] == r['location']:
+            if r['id'] not in rider_ids and c['id'] not in customers_ids and ( c['location'] == r['location'] or r["location"] == "รับทุกงาน"):
                 matches.append({'customer_id': c['id'],'customer_name': c['name'], 'rider_id': r['id'],'rider_name': r['name']})
                 rider_ids.add(r["id"])
                 customers_ids.add(c["id"])
-
+                break
     return matches
 
-matching_result = matching(customers)
-print(matching_result)
+# matching_result = matching(customers)
+# print(matching_result)
 
 # riders = [riders for rider in riders if rider["id"] not in rider_ids]
 
