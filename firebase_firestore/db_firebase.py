@@ -1,8 +1,4 @@
 import os
-import subprocess
-package_names = ["firebase-admin","python-dotenv"]
-for package_name in package_names:
-    subprocess.check_call(['pip', 'install', package_name])
 from dotenv import load_dotenv
 import json
 # from google.protobuf.timestamp_pb2 import Timestamp
@@ -12,7 +8,9 @@ from firebase_admin import credentials, firestore
 
 load_dotenv()
 
-path = os.getenv('SERVICES_ACCOUT_FILE')
+
+
+path = os.getenv('SERVICE_FIREBASE')
 # Initialize Firebase with your service account key JSON file
 cred = credentials.Certificate(path)
 firebase_admin.initialize_app(cred)
