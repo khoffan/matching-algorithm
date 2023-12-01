@@ -38,7 +38,7 @@ for doc in docs:
     count += 1
     data  = doc.to_dict()
     documentId = doc.id
-    if data["name"] != "":
+    if data["name"] != "" and data["stdid"] != "":
         name = data["name"]
         locate = data["locattion"]
         status = data["status"]
