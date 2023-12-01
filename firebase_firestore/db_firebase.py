@@ -1,8 +1,4 @@
 import os
-import subprocess
-package_names = ["firebase-admin","python-dotenv"]
-for package_name in package_names:
-    subprocess.check_call(['pip', 'install', package_name])
 from dotenv import load_dotenv
 import json
 # from google.protobuf.timestamp_pb2 import Timestamp
@@ -40,7 +36,7 @@ for doc in docs:
     count += 1
     data  = doc.to_dict()
     documentId = doc.id
-    if data["name"] != "":
+    if data["name"] != "" and data["stdid"] != "":
         name = data["name"]
         locate = data["locattion"]
         status = data["status"]

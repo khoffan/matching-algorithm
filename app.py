@@ -7,6 +7,7 @@ from components.getRiders import riders_sort
 
 app = Flask(__name__)
 CORS(app)
+
 sort_rider = riders_sort()
 
 
