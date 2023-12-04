@@ -5,7 +5,7 @@ from components.getRiders import riders_sort
 import datetime
 
 # ids = sort_ids()
-customers = cusrtomer_sort()
+
 
 
 def matching(customer):

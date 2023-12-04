@@ -114,6 +114,35 @@ def getRiderlLocate(locate):
     except Exception as e:
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
+@app.route("/api/ridersts/<string:sts>", methods=["GET"])
+def getRidersSts(sts):
+    try:
+        data = sort_rider
+        rider = []
+        if not data:
+            return (
+                jsonify(
+                    {"error": 'Invalid request. "riders" must be a list of rider data.'}
+                ),
+                400,
+            )
+        for r in data:
+            if r['statususer'] == sts:
+                rider.append(r)
+            
+        if not rider:
+            return (
+                jsonify(
+                    {
+                        "error": f'Invalid request. "rider location: {sts}" must be a list of rider data.'
+                    }
+                ),
+                400,
+            )
+        return jsonify({"riders": rider})
+    except Exception as e:
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
+
 
 if __name__ in "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)
