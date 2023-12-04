@@ -41,7 +41,8 @@ for doc in docs:
     if data["name"] != "" and data["stdid"] != "":
         name = data["name"]
         locate = data["locattion"]
-        status = data["status"]
+        status = data["role"]
+        statususer = data["status"]
         datenano = data["date"]
         date = timeformate(datenano)
         all_users["users"].append({
