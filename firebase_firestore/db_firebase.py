@@ -45,6 +45,7 @@ for doc in docs:
         locate = data["locattion"]
         statususer = data["status"]
         role = data["role"]
+        working = data["statuswork"]
         datenano = data["date"]
         date = timeformate(datenano)
         all_users["users"].append(
@@ -54,6 +55,7 @@ for doc in docs:
                 "location": locate,
                 "role": role,
                 "statususer": statususer,
+                "working": working,
                 "date": date,
             }
         )

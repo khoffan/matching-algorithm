@@ -9,7 +9,7 @@ riders_user = []
 
 def riders_sort():
     for user in sort_data:
-        if user["role"] == True:
+        if user["role"] == True and user["statususer"] != "offline":
             riders_user.append(
                 {
                     "id": user["id"],

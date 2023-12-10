@@ -27,6 +27,7 @@ def matching(customer):
                         "customer_name": c["name"],
                         "rider_id": r["id"],
                         "rider_name": r["name"],
+                        "location_match": r["location"],
                         "date": d_time
                     }
                 )

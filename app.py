@@ -10,10 +10,12 @@ CORS(app)
 
 sort_rider = riders_sort()
 
+customer_trans = {"customers: []"}
+
 
 @app.route("/", methods=["GET"])
 def welcome_my_api():
-    return "Welcome to my API!"
+    return "Welcome to my API Matching!"
 
 
 @app.route("/api/matching", methods=["POST"])
@@ -21,7 +23,7 @@ def matchingAPI():
     try:
         data = request.get_json()
 
-        if "customers" not in data:
+        if "customers" not in data and riders_sort == {}:
             return (
                 jsonify(
                     {
@@ -54,7 +56,7 @@ def getRider():
                 400,
             )
         riders = data
-        return jsonify({"riders": riders})
+        return jsonify({"riders": riders}, )
     except Exception as e:
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
