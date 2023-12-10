@@ -9,7 +9,7 @@ customer_user = []
 
 def cusrtomer_sort():
     for user in sort_data:
-        if user["role"] == False:
+        if user["role"] == False and user["statususer"] != "offline":
             customer_user.append(
                 {
                      "id": user["id"],
