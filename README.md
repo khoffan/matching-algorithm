@@ -1,4 +1,5 @@
 # matching-algorithm
+## เป็นการทดลองสร้าง Algorithm ที่สามารถจับคู่กันระหว่างคนสองคน
 1.ทำการลง library in requirements.txt
  > pip install -r requirements.txt
 

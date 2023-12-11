@@ -44,7 +44,6 @@ def matchingAPI():
     except Exception as e:
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-
 @app.route("/api/riderlist", methods=["GET"])
 def getRider():
     try:
@@ -205,4 +204,5 @@ def getMatchingId(userid):
 
 
 if __name__ in "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5001)
+
