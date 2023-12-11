@@ -11,6 +11,7 @@ CORS(app)
 sort_rider = riders_sort()
 
 customer_trans = {"customers: []"}
+matchIds = {"matchresult": []}
 
 
 @app.route("/", methods=["GET"])
@@ -43,7 +44,6 @@ def matchingAPI():
     except Exception as e:
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
-
 @app.route("/api/riderlist", methods=["GET"])
 def getRider():
     try:
@@ -56,7 +56,9 @@ def getRider():
                 400,
             )
         riders = data
-        return jsonify({"riders": riders}, )
+        return jsonify(
+            {"riders": riders},
+        )
     except Exception as e:
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
@@ -100,9 +102,9 @@ def getRiderlLocate(locate):
                 400,
             )
         for r in data:
-            if r['location'] == locate:
+            if r["location"] == locate:
                 rider.append(r)
-            
+
         if not rider:
             return (
                 jsonify(
@@ -115,6 +117,7 @@ def getRiderlLocate(locate):
         return jsonify({"riders": rider})
     except Exception as e:
         return jsonify({"error": f"Server error: {str(e)}"}), 500
+
 
 @app.route("/api/ridersts/<string:sts>", methods=["GET"])
 def getRidersSts(sts):
@@ -129,9 +132,9 @@ def getRidersSts(sts):
                 400,
             )
         for r in data:
-            if r['statususer'] == sts:
+            if r["statususer"] == sts:
                 rider.append(r)
-            
+
         if not rider:
             return (
                 jsonify(
@@ -146,5 +149,60 @@ def getRidersSts(sts):
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 
+@app.route("/api/matchingid", methods=["POST"])
+def matchingId():
+    try:
+        data = request.get_json()
+
+        if "matchids" not in data and riders_sort == {}:
+            return (
+                jsonify(
+                    {
+                        "error": 'Invalid request. "customers" must be a list of customer data.'
+                    }
+                ),
+                400,
+            )
+
+        matchid = data["matchids"]
+
+        # Add more input validation if needed
+        matchIds["matchresult"].append(matchid)
+        print(matchIds)
+        return jsonify({"result": matchid})
+
+    except Exception as e:
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
+
+
+@app.route("/api/matchingid/<string:userid>", methods=["GET"])
+def getMatchingId(userid):
+    try:
+        if not matchIds:
+            return (
+                jsonify(
+                    {
+                        "error": 'Invalid request. "customers" must be a list of customer data.'
+                    }
+                ),
+                400,
+            )
+        for m in matchIds["matchresult"]:
+            if m["cusid"] != userid and m["riderid"] != userid:
+                return (
+                    jsonify(
+                        {
+                            "error": f"Invalid request. {userid} must be a list of customer data."
+                        }
+                    ),
+                    400,
+                )
+
+        return jsonify({"result": matchIds["matchresult"]})
+    except Exception as e:
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
+
+
 if __name__ in "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5001)
+

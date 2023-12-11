@@ -9,7 +9,13 @@ from firebase_admin import credentials, firestore
 
 load_dotenv()
 
+<<<<<<< HEAD
 path = os.getenv("SERVICES_ACCOUT_FILE")
+=======
+
+
+path = os.getenv('SERVICE_FIREBASE')
+>>>>>>> d0af984f589d99fd729102e1470d2a906e44d927
 # Initialize Firebase with your service account key JSON file
 cred = credentials.Certificate(path)
 firebase_admin.initialize_app(cred)
@@ -34,31 +40,34 @@ def timeformate(datenano):
 # Iterate over documents and print data
 all_users = {"users": []}
 count = 0
-for doc in docs:
-    count += 1
-    data = doc.to_dict()
+try:
+    for doc in docs:
+        count += 1
+        data = doc.to_dict()
 
-    documentId = doc.id
-    # print(f"usersts : {statususer} and role : {role}")
-    if data["name"] != "" and data["stdid"] != "":
-        name = data["name"]
-        locate = data["locattion"]
-        statususer = data["status"]
-        role = data["role"]
-        working = data["statuswork"]
-        datenano = data["date"]
-        date = timeformate(datenano)
-        all_users["users"].append(
-            {
-                "id": documentId,
-                "name": name,
-                "location": locate,
-                "role": role,
-                "statususer": statususer,
-                "working": working,
-                "date": date,
-            }
-        )
+        documentId = doc.id
+        # print(f"usersts : {statususer} and role : {role}")
+        if data["name"] != "" and data["stdid"] != "" and data["role"] != "" and data["locattion"] != "":
+            name = data["name"]
+            locate = data["locattion"]
+            statususer = data["status"]
+            role = data["role"]
+            working = data["statuswork"]
+            datenano = data["date"]
+            date = timeformate(datenano)
+            all_users["users"].append(
+                {
+                    "id": documentId,
+                    "name": name,
+                    "location": locate,
+                    "role": role,
+                    "statususer": statususer,
+                    "working": working,
+                    "date": date,
+                }
+            )
+except Exception as e:
+    print(f"e = {e}")
 # print(all_users)
 try:
     with open("../all_user_in_db.json", "w", encoding="utf-8") as file_json:
