@@ -9,13 +9,10 @@ from firebase_admin import credentials, firestore
 
 load_dotenv()
 
-<<<<<<< HEAD
+
 path = os.getenv("SERVICES_ACCOUT_FILE")
-=======
 
 
-path = os.getenv('SERVICE_FIREBASE')
->>>>>>> d0af984f589d99fd729102e1470d2a906e44d927
 # Initialize Firebase with your service account key JSON file
 cred = credentials.Certificate(path)
 firebase_admin.initialize_app(cred)
@@ -47,7 +44,9 @@ try:
 
         documentId = doc.id
         # print(f"usersts : {statususer} and role : {role}")
-        if data["name"] != "" and data["stdid"] != "" and data["role"] != "" and data["locattion"] != "":
+        if (
+            data["name"] and data["stdid"] and data["role"] and data["locattion"]
+        ) != "":
             name = data["name"]
             locate = data["locattion"]
             statususer = data["status"]
